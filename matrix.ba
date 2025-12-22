@@ -1,18 +1,15 @@
-5 CLS:PRINTCHR$(27)"V": REM no scroll
-10 C$="'`" + CHR$(34) + ".,^:;!Il+rTfLCUJXzonxPqdbkgaZ0W8#B@$"
-15 H=6:MC=4:MR=16:REM line height, max co, amx row
-20 DIM Y(MC),I(MC):REM i(n) has the column. y(n) is the height of that column
-25 CNT=0:T=RND(-VAL(RIGHT$(TIME$,2)))
-30 IFCNT>=MCTHEN60
-40 C=INT(40*RND(1))+1:CNT=CNT+1:I(CNT)=C:Y(CNT)=INT(5*RND(1))
-50 REM:60 is main loop
-60 FORC=1TOCNT:IFI(C)=0THENC=99:GOTO150
-65 R=Y(C):IFR>=MRTHEN110
-70 X%=1+R+6*RND(1):PRINT@(R*40+I(C)-1),MID$(C$,X%,1):Y(C)=R+1
-75 REMIF C>H THEN PRINT@((C-H-1)*40+I(c))," ";
-100 GOTO150
-105 REM drop off the screen; reclaim slot
-110 Y(C)=0:I(C)=0:IFCNT=1THEN140
-130 I(C)=I(CNT):Y(C)=Y(CNT)
-140 CNT=CNT-1:C=99:REM mo more slots
+5 CLS:PRINTCHR$(27)"V":REM no scroll
+10 C$=".,'`^" + CHR$(34) + ":;!+lITLCUOXzonxPqdbkga*ZMW08#B@$&"
+15 DEFINT A-Z:H=6:MC=4:MR=16:REM line height, max co, max row
+20 DIM X(MC),Y(MC):REM x(n)&y(n) are the col and row
+25 N=0:T=RND(-VAL(RIGHT$(TIME$,2)))
+30 IFN>=MCTHEN60
+40 C=40*RND(1)+1:N=N+1:X(N)=C:Y(N)=5*RND(1)
+60 FORI=1TON:IFX(I)=0THEN145
+65 R=Y(I):IFR>=MRTHEN110
+70 P=1+2*R+8*RND(1):PRINT@(R*40+X(I)-1),MID$(C$,P,1);:Y(I)=R+1:GOTO150
+100 REM reclaim slot
+110 Y(I)=0:X(I)=0:IFN>1THENX(I)=X(N):Y(I)=Y(N)
+140 N=N-1
+145 I=99:REM stop iterating
 150 NEXT:IFRND(1)<.5THEN60ELSE30
