@@ -1,0 +1,21 @@
+5 CLS:PRINTCHR$(27)"V": REM no scroll
+10 C$="' ." + CHR$(34) + ",:;!Il+rTfLCUJXzounxPqdbhkgaZOW8#B@$": REM lightest to darkest
+15 H=6:MC=10: REM line height, maxcount
+20 DIM Y(10): REM height of each column (0 means empty, obvs)
+25 DIM I(10):CNT=0:REM i(n) has the column. y(n) is the height of that column
+27 T=VAL(RIGHT$(TIME$, 2))
+30 IF CNT>=MC THEN 60:REM have enough
+40 C=INT(40*RND(T)):REMIF Y(C)<>0 THEN 40
+50 CNT=CNT+1:I(CNT)=C:Y(CNT)=1
+60 FOR J=1 TO CNT:IFI(J)=0ORY(J)=0THEN150
+65 C=Y(J):IFC<=16THENPRINT@((C-1)*40+I(J)),CHR$(48+J);:REM todo:pick the char
+70 IF C>(16+H)THEN110:REM off the screen. reclaim the slot
+75 Y(J)=C+1
+80 IF C>H THEN PRINT@((C-H-1)*40+I(J))," ";:REM todo: randomize the height
+100 GOTO150
+110 Y(J)=1:I(J)=0
+120 IF CNT=1 THEN 140:REM we only had one
+130 I(J)=I(CNT):Y(J)=Y(CNT)
+140 CNT=CNT-1:J=99
+150 NEXT
+200 GOTO 30
