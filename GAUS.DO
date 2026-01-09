@@ -1,59 +1,39 @@
-10 REM *** 3D GAUSSIAN  by JHM 01/26 ***
-20 REM *** CGA 320x200 GRAPHICS MODE ***
-30 SCREEN 1
-40 COLOR 0, 1
+10 REM *** Based on 3D GAUSSIAN by JHM 01/26 ***
+20 REM *** Tandy 200 version by dplassgit 01/26
 50 CLS
 60 REM INITIALIZE VARIABLES
-70 LET SIZE = 15
-80 LET STP = 1.5
-90 LET SIGMA = 5
-100 LET SCALE = 40
+70 SZ = 15
+80 STP = 1.5
+90 SIGMA = 5
+100 SCALE = 40: REM TODO fix this
 110 REM DRAW GRID AND SURFACE
-115 LET LNUM = 120
-120 FOR X = -SIZE TO SIZE STEP STP
-125   LOCATE 24, 1: PRINT "Line:"; LNUM; "  ";
-130   FOR Y = -SIZE TO SIZE STEP STP
-135     LET LNUM = 140
+120 FOR X = -SZ TO SZ STEP STP
+130   FOR Y = -SZ TO SZ STEP STP
 140     REM CALCULATE GAUSSIAN HEIGHT
-145     LET LNUM = 150
-150     LET DIST = (X * X + Y * Y)
-160     LET Z = SCALE * EXP(-DIST / (2 * SIGMA * SIGMA))
+150     DIST = X * X + Y * Y
+160     Z = SCALE * EXP(-DIST / (2 * SIGMA * SIGMA))
 170     REM PROJECT TO 2D SCREEN (ISOMETRIC)
-180     LET SX = 160 + X * 6 - Y * 3
-190     LET SY = 100 - Z * 1.5 + X * 1.2 + Y * 1.2
+180     SX = 120 + X * 6 - Y * 3
+190     SY = 64 - Z * 1.5 + X * 1.2 + Y * 1.2
 200     REM DRAW POINT
-210     IF SX >= 0 AND SX <= 319 AND SY >= 0 AND SY <= 199 THEN
-220       PSET (SX, SY), 3
-230     END IF
+210     IF SX >= 0 AND SX <= 239 AND SY >= 0 AND SY <= 127 THEN PSET (SX, SY)
 240     REM DRAW CONNECTING LINES
-250     IF X > -SIZE THEN
-260       LET PX = 160 + (X - STP) * 6 - Y * 3
-270       LET DIST2 = ((X - STP) * (X - STP) + Y * Y)
-280       LET PZ = SCALE * EXP(-DIST2 / (2 * SIGMA * SIGMA))
-290       LET PY = 100 - PZ * 1.5 + (X - STP) * 1.2 + Y * 1.2
-300       IF PX >= 0 AND PX <= 319 AND PY >= 0 AND PY <= 199 THEN
-310         LINE (PX, PY)-(SX, SY), 2
-320       END IF
-330     END IF
-340     IF Y > -SIZE THEN
-350       LET PX = 160 + X * 6 - (Y - STP) * 3
-360       LET DIST3 = (X * X + (Y - STP) * (Y - STP))
-370       LET PZ = SCALE * EXP(-DIST3 / (2 * SIGMA * SIGMA))
-380       LET PY = 100 - PZ * 1.5 + X * 1.2 + (Y - STP) * 1.2
-390       IF PX >= 0 AND PX <= 319 AND PY >= 0 AND PY <= 199 THEN
-400         LINE (PX, PY)-(SX, SY), 2
-410       END IF
-420     END IF
-430   NEXT Y
-435   LET LNUM = 440
-440 NEXT X
+250     IF X <= -SZ THEN 340
+260       PX = 120 + (X - STP) * 6 - Y * 3
+270       DIST2 = ((X - STP) * (X - STP) + Y * Y)
+280       PZ = SCALE * EXP(-DIST2 / (2 * SIGMA * SIGMA))
+290       PY = 64 - PZ * 1.5 + (X - STP) * 1.2 + Y * 1.2
+300       IF PX >= 0 AND PX <= 239 AND PY >= 0 AND PY <= 127 THEN LINE (PX, PY)-(SX, SY)
+340     IF Y <= -SZ THEN 430
+350       PX = 120 + X * 6 - (Y - STP) * 3
+360       DIST3 = (X * X + (Y - STP) * (Y - STP))
+370       PZ = SCALE * EXP(-DIST3 / (2 * SIGMA * SIGMA))
+380       PY = 100 - PZ * 1.5 + X * 1.2 + (Y - STP) * 1.2
+390       IF PX >= 0 AND PX <= 239 AND PY >= 0 AND PY <= 127 THEN LINE (PX, PY)-(SX, SY)
+430   NEXT :rem Y
+440 NEXT :rem X
 450 REM DISPLAY TITLE
-460 LOCATE 1, 1
-470 PRINT "3D GAUSSIAN - CGA"
-480 LOCATE 2, 1
+470 PRINT@0,"3D GAUSSIAN - T200"
 490 PRINT "Press key to exit"
 500 REM WAIT FOR KEY
-510 A$ = INKEY$: IF A$ = "" THEN GOTO 510
-520 SCREEN 0
-530 WIDTH 80, 25
-540 END
+510 A$ = INKEY$: IF A$ = "" THEN 510
