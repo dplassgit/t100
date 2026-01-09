@@ -18,13 +18,13 @@
 200     REM DRAW POINT
 210     IF SX >= 0 AND SX <= 239 AND SY >= 0 AND SY <= 127 THEN PSET (SX, SY)
 240     REM DRAW CONNECTING LINES
-250     IF X <= -SZ THEN 340
+250     IF X <= -SZ THEN 340: REM TODO not sure we need this
 260       PX = 120 + (X - STP) * 6 - Y * 3
 270       DIST2 = ((X - STP) * (X - STP) + Y * Y)
 280       PZ = SCALE * EXP(-DIST2 / (2 * SIGMA * SIGMA))
 290       PY = 64 - PZ * 1.5 + (X - STP) * 1.2 + Y * 1.2
 300       IF PX >= 0 AND PX <= 239 AND PY >= 0 AND PY <= 127 THEN LINE (PX, PY)-(SX, SY)
-340     IF Y <= -SZ THEN 430
+340     IF Y <= -SZ THEN 430: REM TODO not sure we need this
 350       PX = 120 + X * 6 - (Y - STP) * 3
 360       DIST3 = (X * X + (Y - STP) * (Y - STP))
 370       PZ = SCALE * EXP(-DIST3 / (2 * SIGMA * SIGMA))
