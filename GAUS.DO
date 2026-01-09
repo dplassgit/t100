@@ -28,7 +28,7 @@
 350       PX = 120 + X * 6 - (Y - STP) * 3
 360       DIST3 = (X * X + (Y - STP) * (Y - STP))
 370       PZ = SCALE * EXP(-DIST3 / (2 * SIGMA * SIGMA))
-380       PY = 100 - PZ * 1.5 + X * 1.2 + (Y - STP) * 1.2
+380       PY = 64 - PZ * 1.5 + X * 1.2 + (Y - STP) * 1.2
 390       IF PX >= 0 AND PX <= 239 AND PY >= 0 AND PY <= 127 THEN LINE (PX, PY)-(SX, SY)
 430   NEXT :rem Y
 440 NEXT :rem X
